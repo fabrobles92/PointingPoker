@@ -1,0 +1,58 @@
+.NavLinks {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  font-size: 40px;
+  font-weight: lighter;
+  height: 100%;
+  padding-left: 13px;
+  padding-right: 13px;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  text-decoration: none;
+}
+
+.NavLinks:hover {
+  color: orange;
+}
+
+
+.CentralLinksNavBar {
+  margin: 0 58px 0 58px;
+  
+}
+
+.NavLink:hover {
+  opacity: 0.5;
+}
+
+.ContainerDropdown {
+  position: absolute;
+  width: 100%;
+  top: 56px;
+}
+
+.DropDownElement {
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  display: flex;
+  align-items: center;
+  background-color: hsla(0,0%,7%,.932);
+  border-bottom: 1px solid #363636;
+  border-top: 1px solid #212121;
+  color: #fff;
+  font-size: 18px;
+  height: 48px;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 100%;
+  text-decoration: none;
+
+}
+
+.DropDownElement a{
+  display: flex;
+}
+
+.DropDownElement:hover {
+  color: orange;
+}
+

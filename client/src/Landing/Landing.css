@@ -1,0 +1,22 @@
+.form {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+    .separator{
+        border-bottom: 1.5px solid black; 
+        width: 25ch;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .form {
+        flex-flow: column;
+        align-items: center;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .separator{border-right: 1.5px solid black;}
+    
+}

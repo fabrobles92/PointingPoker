@@ -1,5 +1,5 @@
-import { useEffect, useContext, useState } from "react"
-import { UserContext } from "../userContext";
+import { useContext, useState } from "react"
+import { SocketContext } from "../socketContext";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import {Container,  Box, Button, Typography} from "@mui/material";
@@ -21,17 +21,10 @@ const validate = (values) => {
 }
 
 
-const Landing = ({socket}) => {
+const Landing = () => {
     const [message, setMessage] = useState({flag: null, message: null})
     const navigate = useNavigate()
-    const {setUsers} = useContext(UserContext)
-
-    useEffect(() => {
-        socket.on('users', users => {
-            setUsers(users)
-        })
-    
-    }, [])
+    const socket = useContext(SocketContext)
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {

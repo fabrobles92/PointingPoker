@@ -18,7 +18,8 @@ const columns = [
 export default function StickyHeadTable({socket, users, showResults}) {
   return (
     <Paper sx={{ width: {xs: '100%',sm: '50%'}, overflow: 'hidden' , alignSelf: 'center', backgroundColor: 'inherit'}}>
-      <TableContainer sx={{ maxHeight:{xs: 232, sm: 367}}}>
+      {/* <TableContainer sx={{ maxHeight:{xs: 232, sm: 367}}}> */}
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

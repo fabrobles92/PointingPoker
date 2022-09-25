@@ -16,14 +16,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <ResponsiveAppBar/>
-      <div className="App-header">
+      {/* <div className="App-header"> */}
         <UsersProvider>
             <Routes>
               <Route path='/' element={<Landing socket={socket}/>}/>
               <Route path='/:id' element={<Room socket={socket}/>}/>
             </Routes>
         </UsersProvider>        
-      </div>
+      {/* </div> */}
       </BrowserRouter>
     </div>
   );

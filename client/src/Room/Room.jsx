@@ -1,10 +1,13 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext, useState, useRef } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Typography, Box, Button } from '@mui/material';
 import StickyHeadTable from './Table';
 import { UserContext } from '../userContext';
 import FormDialog from './Dialog';
 import SnackbarMessage from '../Snackbar/SnackbarMessage';
+import ButtonClipboard from './ButtonClipboard';
+
+
 import './Room.css'
 const points = [
     {points: 0.5, value: 0.5},
@@ -27,6 +30,9 @@ const Room = ({socket}) => {
     const navigate = useNavigate()
     const roomID = params.id
     const {users, setUsers} = useContext(UserContext)
+    const myRef = useRef(null)
+
+    const executeScroll = () => !myRef.current ? null : myRef.current.scrollIntoView({ behavior: "smooth" })    
 
     useEffect(() => {
         socket.on('users', users => {
@@ -46,6 +52,14 @@ const Room = ({socket}) => {
         }
         setShowResults(false)
     }, [users])
+
+    useEffect(()=> {
+        if(showResults){
+            executeScroll()
+        }else{
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [showResults])
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -95,55 +109,58 @@ const Room = ({socket}) => {
         return filteredList.length ? (filteredList.reduce((a, b) => a + b.vote, 0) / filteredList.length).toFixed(2) : 0
     }
     return(
-        <Container component='div'>
-            
-            <FormDialog join={join}/>
-            <Typography variant="h3" component='div' marginBottom='15px' fontFamily='DM Sans' letterSpacing='-2px' fontWeight='600'
-                sx={{
-                    fontSize: {xs: '2.5rem', sm: '4rem'},
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
-            >
-                {error ? 'Room #: '+ params.id: 'Room does not exist'}
-            </Typography>
-            
-            { error && <Box sx={{display: 'flex', '& > *': {m: 1,}, flexFlow: 'column', justifyContent: 'center' }}>
-                <div className="container">
-                    {points.map((buttonInfo) => (
-                        <Button key={buttonInfo.points} color='primary' size='medium' variant="contained" onClick={() => handleVote(buttonInfo.points)}>
-                            {buttonInfo.points}
-                        </Button>
-                    ))}
-                </div>
-                <div className='clear-show-group'>
-                    <Button color='secondary' size='medium' variant="contained" onClick={handleClear}>
-                        Clear
-                    </Button>
-                    <Button color='secondary' size='medium' variant="contained" onClick={handleShow}>
-                        Show
-                    </Button>
-                </div>       
-                <StickyHeadTable socket={socket} users={users} showResults={showResults}/>                 
-                {showResults && <Typography variant="h3" component='div' marginBottom='15px' fontWeight='600' fontFamily='DM Sans' letterSpacing='-2px'
+        <div className="App-header room-container">
+            <Container component='div'>
+                <FormDialog join={join}/>
+                <Typography variant="h3" component='div' marginBottom='15px' fontFamily='DM Sans' letterSpacing='-2px' fontWeight='600'
                     sx={{
-                        fontSize: {xs: '2rem', sm: '3.5rem'},
+                        // fontSize: {xs: '2.5rem', sm: '4rem'},
                         display: 'flex',
-                        flexFlow: 'column',
-                        justifyContent: 'center',
-                        color: '#a8aeb2',                    
+                        justifyContent: 'center'
                     }}
-                    >
-                    Average: <label style={{color: 'black'}}>{calculateAverage(users)}</label>
-                    {users.every( user => user.vote === users[0]['vote'] && user.vote !== '?') && 
-                    <Typography fontWeight='600' sx={{fontSize: {xs: '1rem', sm: '2.5rem'}, color: 'rgb(54, 194, 54)'}}>
-                        Consensus!
+                >
+                    {/* {error ? 'Room #: '+ params.id: 'Room does not exist'} */}
+                    {error ? <ButtonClipboard/> : 'Room does not exist'}
+                </Typography>
+
+                
+                { error && <Box sx={{display: 'flex', '& > *': {m: 1,}, flexFlow: 'column', justifyContent: 'center' }}>
+                    <div className="container">
+                        {points.map((buttonInfo) => (
+                            <Button key={buttonInfo.points} color='primary' size='medium' variant="contained" onClick={() => handleVote(buttonInfo.points)}>
+                                {buttonInfo.points}
+                            </Button>
+                        ))}
+                    </div>
+                    <div className='clear-show-group'>
+                        <Button color='secondary' size='medium' variant="contained" onClick={handleClear}>
+                            Clear
+                        </Button>
+                        <Button color='secondary' size='medium' variant="contained" onClick={handleShow}>
+                            Show
+                        </Button>
+                    </div>       
+                    <StickyHeadTable socket={socket} users={users} showResults={showResults}/>                 
+                    {showResults && <Typography ref={myRef} variant="h3" component='div' marginBottom='15px' fontWeight='600' fontFamily='DM Sans' letterSpacing='-2px'
+                        sx={{
+                            fontSize: {xs: '2rem', sm: '3.5rem'},
+                            display: 'flex',
+                            flexFlow: 'column',
+                            justifyContent: 'center',
+                            color: '#a8aeb2',                    
+                        }}
+                        >
+                        Average: <label style={{color: 'black'}}>{calculateAverage(users)}</label>
+                        {users.every( user => user.vote === users[0]['vote'] && user.vote !== '?') && 
+                        <Typography fontWeight='600' sx={{fontSize: {xs: '1rem', sm: '2.5rem'}, color: 'rgb(54, 194, 54)'}}>
+                            Consensus!
+                        </Typography>}
                     </Typography>}
-                </Typography>}
-            </Box>
-            }
-            <SnackbarMessage state={message} handleClose={handleClose}/>
-        </Container>
+                </Box>
+                }
+                <SnackbarMessage state={message} handleClose={handleClose}/>
+            </Container>
+        </div>
     )
 }
 

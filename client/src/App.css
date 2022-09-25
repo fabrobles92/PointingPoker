@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 .App {
   text-align: center;
+  background-color: #D0E0EF;
 }
 
 .App-logo {
@@ -16,7 +17,7 @@
 
 .App-header {
   /* background-color: #282c34; */
-  background-color: #D0E0EF;
+  /* background-color: #D0E0EF; */
   
   min-height: 100vh;
   display: flex;

@@ -64,44 +64,46 @@ const Landing = ({socket}) => {
 
     
     return(
-    <Container>
-        <Typography variant="h1"component='div'marginBottom='15px' fontFamily='DM Sans' fontWeight='600' letterSpacing='-2px'
-            sx={{
-                fontSize: {xs: '4.5rem', sm: '6rem'}
-            }}                                    
-        >
-            Pointing Poker
-        </Typography>
-        <Box component="div" noValidate autoComplete="off" 
-            sx={{
-                '& > :not(style)': { m: 1.5, },
-                display: 'flex',
-                flexDirection: { xs: 'column', sm: 'row'},
-                justifyContent: 'center',
-                alignItems: { xs: 'center', sm: 'initial'},
-                height: {sm:  '80px'}
+    <div className="App-header">
+        <Container>
+            <Typography variant="h1"component='div'marginBottom='15px' fontFamily='DM Sans' fontWeight='600' letterSpacing='-2px'
+                sx={{
+                    fontSize: {xs: '4.5rem', sm: '6rem'}
+                }}                                    
+            >
+                Pointing Poker
+            </Typography>
+            <Box component="div" noValidate autoComplete="off" 
+                sx={{
+                    '& > :not(style)': { m: 1.5, },
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row'},
+                    justifyContent: 'center',
+                    alignItems: { xs: 'center', sm: 'initial'},
+                    height: {sm:  '80px'}
 
-            }}                        
-        >
-            <Button size="large" variant="contained" color="primary" sx={{marginRight: '15px', width: {xs: '25ch'}}} 
-                onClick={handleSubmitNew}>
-                Create Room
-            </Button>
-            <div className="separator"/>
-            <Formik
-                initialValues={{roomID: ''}}
-                validate={validate}
-                onSubmit= {handleSubmitJoin}>
-                <Form className="form">
-                    <Input placeholder="Join a Room" name='roomID'/>
-                    <Button type="submit" sx={ { borderRadius: 100 , width: {xs:'12.5ch'}} } size="large" variant="contained" color='primary'>
-                    <ArrowForwardTwoToneIcon sx={{fontSize: "25px"}}/>                    
-                    </Button>
-                </Form>
-            </Formik>
-        </Box>
-        <SnackbarMessage state={message} handleClose={handleClose}/>
-    </Container>
+                }}                        
+            >
+                <Button size="large" variant="contained" color="primary" sx={{marginRight: '15px', width: {xs: '25ch'}}} 
+                    onClick={handleSubmitNew}>
+                    Create Room
+                </Button>
+                <div className="separator"/>
+                <Formik
+                    initialValues={{roomID: ''}}
+                    validate={validate}
+                    onSubmit= {handleSubmitJoin}>
+                    <Form className="form">
+                        <Input placeholder="Join a Room" name='roomID'/>
+                        <Button type="submit" sx={ { borderRadius: 100 , width: {xs:'12.5ch'}} } size="large" variant="contained" color='primary'>
+                        <ArrowForwardTwoToneIcon sx={{fontSize: "25px"}}/>                    
+                        </Button>
+                    </Form>
+                </Formik>
+            </Box>
+            <SnackbarMessage state={message} handleClose={handleClose}/>
+        </Container>
+    </div>
 
     )
   }

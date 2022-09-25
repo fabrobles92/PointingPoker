@@ -5,12 +5,13 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from "react-router-dom";
+import ModalDonate from './ModalDonate'
 import './NavBar.css'
 
 const ResponsiveAppBar = () => {
 
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false)
   const ref = useRef()
 
   function checkSize(){
@@ -46,9 +47,15 @@ const ResponsiveAppBar = () => {
     setIsMenuVisible(false);
   };
 
+  const handleCloseModalDonate = () => {
+    setModalVisible(false);
+  };
+
+
   return (
     <>
-      <AppBar position="static" sx={{ bgcolor: "#D0E0EF", position: 'relative', boxShadow: 'none'}}>
+      {console.log(modalVisible.toString())}      
+      <AppBar position="static" sx={{ bgcolor: "#D0E0EF", position: 'relative', boxShadow: 'none', zIndex: '1'}}>
         <Container maxWidth="lg">
           <Toolbar disableGutters>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
@@ -67,9 +74,10 @@ const ResponsiveAppBar = () => {
               <a onClick={handleCloseNavMenu} href='/' className='CentralLinksNavBar NavLinks'>
                 Home
               </a>
-              <a onClick={handleCloseNavMenu} href='#' className='CentralLinksNavBar NavLinks'>
+              <a onClick={()=> setModalVisible(true)} className='CentralLinksNavBar NavLinks'>
                 Donate
               </a>
+              <ModalDonate state={modalVisible} handleClose={handleCloseModalDonate}/>
             </Box>
           </Toolbar>
         </Container>
